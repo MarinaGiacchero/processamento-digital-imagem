@@ -2,10 +2,11 @@
 import numpy as np
 import cv2 as cv
 import matplotlib.pyplot as plt 
-
+from PIL import Image
 #fazendo a leitura da imagem
 img = cv.imread('img/Fig308.tif',0)  #primeira imagem
-#img = cv.imread('img/enhance-me.gif', 0) #segunda imagem
+#img = Image.open('img/enhance-me.gif') #segunda imagem
+#img= np.array(img)
 #criando uma lista
 lista=[]
 #fazendo um laço com número de bits da imagem criada na lista
