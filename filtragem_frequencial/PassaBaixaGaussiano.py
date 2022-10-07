@@ -14,17 +14,17 @@ def main():
     #img = cv2.imread("img/car.tif", 0)
 #    img = cv2.imread("img/len_periodic_noise.png", 0)
    # img = cv2.imread("img/periodic_noise.png", 0)
-    imagem = Image.fromarray(img)
+    #imagem = Image.fromarray(img)
     espectral = np.fft.fft2(img)
     Centro = np.fft.fftshift(espectral)
-
+    z, h= img.shape
     # Aplicando o Gaussiano
     base = np.zeros(img.shape[:2])
     rows, cols = img.shape[:2]
     centro = (rows/2,cols/2)
     for x in range(cols):
         for y in range(rows):
-            base[y,x] = exp(((-distancia((y,x),centro)**2)/(2*(50**2))))
+            base[y,x] = exp(((-distancia((y,x),centro)**2)/(2*((z*0.05)**2))))
 
     PassaBaixaFilter = base
     PassaBaixaCentro = Centro * base
@@ -32,7 +32,7 @@ def main():
     inversoPassaBaixa = np.fft.ifft2(PassaBaixa)
 
     fig, ax = plt.subplots(nrows=2,ncols=3)
-    ax[0,0].imshow(np.log(1+np.abs(imagem)),cmap='gray')
+    ax[0,0].imshow(np.log(1+np.abs(img)),cmap='gray')
     ax[0,0].set_title('Original')
     ax[0,1].imshow(np.log(1+np.abs(espectral)),cmap='gray')
     ax[0,1].set_title('Espectral')

@@ -17,14 +17,14 @@ def main():
     imagem = Image.fromarray(img)
     espectral = np.fft.fft2(img)
     Centro = np.fft.fftshift(espectral)
-
+    z, h = img.shape
     # Aplicando o Ideal
     base = np.zeros(img.shape[:2])
     rows, cols = img.shape[:2]
     meio = (rows/2,cols/2)
     for x in range(cols):
         for y in range(rows):
-            if distancia((y,x),meio) < 10:
+            if distancia((y,x),meio) < (z*0.5):
                 base[y,x] = 1
 
     PassaBaixaFilter = base
@@ -38,9 +38,9 @@ def main():
     ax[0,1].imshow(np.log(1+np.abs(espectral)),cmap='gray')
     ax[0,1].set_title('Espectral')
     ax[0,2].imshow(np.log(1+np.abs(PassaBaixaFilter)),cmap='gray')
-    ax[0,2].set_title('Passa-Baixas BW')
+    ax[0,2].set_title('Passa-Baixas')
     ax[1,0].imshow(np.log(1+np.abs(PassaBaixaCentro)),cmap='gray')
-    ax[1,0].set_title('Espectral Centralizada c/ Passa-Baixa BW')
+    ax[1,0].set_title('Espectral Centralizada c/ Passa-Baixa')
     ax[1,1].imshow(np.log(1+np.abs(PassaBaixa)),cmap='gray')
     ax[1,1].set_title('Descentralizada')
     ax[1,2].imshow(np.log(1+np.abs(inversoPassaBaixa)),cmap='gray')
